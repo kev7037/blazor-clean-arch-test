@@ -17,15 +17,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.Infrastructures", "02.In
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.EndPoints", "03.EndPoints", "{B9145D72-293C-40DA-A50C-892D720F8C14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Core.ApplicationServices", "Mc2.CrudTest.Core.ApplicationServices\Mc2.CrudTest.Core.ApplicationServices.csproj", "{B53C6AF6-40E4-4A8B-9247-20153B2BB0D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Core.ApplicationServices", "Mc2.CrudTest.Core.ApplicationServices\Mc2.CrudTest.Core.ApplicationServices.csproj", "{B53C6AF6-40E4-4A8B-9247-20153B2BB0D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Core.Domain", "Mc2.CrudTest.Core.Domain\Mc2.CrudTest.Core.Domain.csproj", "{34177794-DDD5-46E4-B158-211B5A5364F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Core.Domain", "Mc2.CrudTest.Core.Domain\Mc2.CrudTest.Core.Domain.csproj", "{34177794-DDD5-46E4-B158-211B5A5364F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Infrastructures.Command", "Mc2.CrudTest.Infrastructures.Command\Mc2.CrudTest.Infrastructures.Command.csproj", "{C78767AF-E6EE-4513-BDD3-058E2A833997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Infrastructures.Command", "Mc2.CrudTest.Infrastructures.Command\Mc2.CrudTest.Infrastructures.Command.csproj", "{C78767AF-E6EE-4513-BDD3-058E2A833997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Infrastructures.Query", "Mc2.CrudTest.Infrastructures.Query\Mc2.CrudTest.Infrastructures.Query.csproj", "{641403E6-34E6-4291-B780-F9E49FB3C1D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Infrastructures.Query", "Mc2.CrudTest.Infrastructures.Query\Mc2.CrudTest.Infrastructures.Query.csproj", "{641403E6-34E6-4291-B780-F9E49FB3C1D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.Tests", "04.Tests", "{717E343C-184B-4048-8915-002DE1DCE493}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EC29D7B6-2085-4BA8-81E0-A072E6F52DF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{641403E6-34E6-4291-B780-F9E49FB3C1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{641403E6-34E6-4291-B780-F9E49FB3C1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{641403E6-34E6-4291-B780-F9E49FB3C1D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC29D7B6-2085-4BA8-81E0-A072E6F52DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC29D7B6-2085-4BA8-81E0-A072E6F52DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC29D7B6-2085-4BA8-81E0-A072E6F52DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC29D7B6-2085-4BA8-81E0-A072E6F52DF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,7 +7,7 @@ namespace Mc2.CrudTest.Infrastructures.Command.Customers
     public class CustomerCommandRepository : CommandDBContext, ICustomerCommandRepository
     {
         protected readonly CommandDBContext _dbContext;
-        public CustomerCommandRepository(DbContextOptions options, CommandDBContext dbContext) : base(options)
+        public CustomerCommandRepository(DbContextOptions<CommandDBContext> options, CommandDBContext dbContext) : base(options)
         {
             _dbContext = dbContext;
         }

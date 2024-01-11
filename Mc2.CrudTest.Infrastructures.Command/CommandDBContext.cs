@@ -7,7 +7,7 @@ namespace Mc2.CrudTest.Infrastructures.Command
 {
     public class CommandDBContext : DbContext
     {
-        public CommandDBContext(DbContextOptions options) : base(options)
+        public CommandDBContext(DbContextOptions<CommandDBContext> options) : base(options)
         {
         }
 
