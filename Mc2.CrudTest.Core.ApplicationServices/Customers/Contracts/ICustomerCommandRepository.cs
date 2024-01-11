@@ -1,10 +1,10 @@
-﻿namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts
+﻿using Mc2.CrudTest.Core.Domain.Customers.Entities;
+
+namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts
 {
     public interface ICustomerCommandRepository
     {
-        Task<bool> IsEmailIsUnique();
+        Task AddAsync(Customer customers);
 
-        // by first name, last name, date of birth
-        Task<bool> IsCustomerUnique();
     }
 }

@@ -1,4 +1,6 @@
-using Microsoft.AspNetCore.ResponseCompression;
+using Mc2.CrudTest.Infrastructures.Command;
+using Mc2.CrudTest.Infrastructures.Query;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mc2.CrudTest.Presentation
 {
@@ -9,6 +11,9 @@ namespace Mc2.CrudTest.Presentation
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services
+                   .AddDbContext<CommandDBContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("CommandCnn")))
+                   .AddDbContext<QueryDBContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("QueryCnn")));
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
@@ -39,7 +44,21 @@ namespace Mc2.CrudTest.Presentation
             app.MapControllers();
             app.MapFallbackToFile("index.html");
 
+            ApplyMigrations(app);
             app.Run();
+        }
+
+        static void ApplyMigrations(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var _db = scope.ServiceProvider.GetRequiredService<CommandDBContext>();
+
+                if (_db.Database.GetPendingMigrations().Count() > 0)
+                {
+                    _db.Database.Migrate();
+                }
+            }
         }
     }
 }

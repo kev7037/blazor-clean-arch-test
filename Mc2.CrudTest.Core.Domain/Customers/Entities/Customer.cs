@@ -13,6 +13,7 @@ namespace Mc2.CrudTest.Core.Domain.Customers.Entities
         public string BankAccountNumber { get; set; } 
         #endregion
 
+        public Customer() { }
         public Customer(string firstName,
                         string lastName,
                         DateTime dateOfBirth,

@@ -1,6 +1,8 @@
-﻿namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustomer
+﻿using MediatR;
+
+namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustomer
 {
-    public class CreateCustomerCommand
+    public class CreateCustomerCommand : IRequest<long>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

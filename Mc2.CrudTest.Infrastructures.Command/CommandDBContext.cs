@@ -27,7 +27,7 @@ namespace Mc2.CrudTest.Infrastructures.Command
         public CommandDBContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<CommandDBContext>();
-            builder.UseSqlServer("Server=.;Database=crudtest;MultipleActiveResultSets=true;User ID=sa; Password=a_A123456;Persist Security Info=True;");
+            builder.UseSqlServer("Server=crudtest_db;Database=crudtest;MultipleActiveResultSets=true;User ID=sa; Password=a_A123456;Persist Security Info=True;TrustServerCertificate=True");
             return new CommandDBContext(builder.Options);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts;
+using Mc2.CrudTest.Core.Domain.Customers.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mc2.CrudTest.Infrastructures.Command.Customers
@@ -11,7 +12,7 @@ namespace Mc2.CrudTest.Infrastructures.Command.Customers
             _dbContext = dbContext;
         }
 
-        public Task<bool> IsCustomerUnique() => throw new NotImplementedException();
-        public Task<bool> IsEmailIsUnique() => throw new NotImplementedException();
+        public async Task AddAsync(Customer customer) 
+            => await _dbContext.AddAsync(customer);
     }
 }
