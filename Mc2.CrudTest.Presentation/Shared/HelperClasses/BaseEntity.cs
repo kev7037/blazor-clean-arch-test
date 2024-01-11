@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mc2.CrudTest.Core.Domain
+namespace Mc2.CrudTest.Presentation.Shared.HelperClasses
 {
-    internal class Class1
+    public class BaseEntity
     {
+        public long Id { get; set; }
     }
 }
