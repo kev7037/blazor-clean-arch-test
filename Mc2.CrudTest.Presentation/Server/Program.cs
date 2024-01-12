@@ -1,4 +1,5 @@
 using FluentValidation;
+using Mc2.CrudTest.Core.ApplicationServices.C_DomainEvent.Events;
 using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustomer;
 using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.DeleteCustomer;
 using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustomer;
@@ -10,6 +11,7 @@ using Mc2.CrudTest.Core.Domain.Customers.DTOs;
 using Mc2.CrudTest.Core.Domain.Customers.Events;
 using Mc2.CrudTest.Infrastructures.Command;
 using Mc2.CrudTest.Infrastructures.Command.Customers;
+using Mc2.CrudTest.Infrastructures.Command.Interceptors;
 using Mc2.CrudTest.Infrastructures.Query;
 using Mc2.CrudTest.Infrastructures.Query.Customers;
 using Mc2.CrudTest.ServerHelper;
@@ -87,7 +89,15 @@ namespace Mc2.CrudTest.Presentation
 
             // MediatR
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-            
+
+            // Registering Notification Handlers
+            builder.Services.AddScoped<INotificationHandler<CustomerCreated>, DummyCustomerCreatedHandler>();
+            builder.Services.AddScoped<INotificationHandler<CustomerUpdated>, DummyCustomerUpdatedHandler>();
+            builder.Services.AddScoped<INotificationHandler<CustomerDeleted>, DummyCustomerDeletedHandler>();
+
+            // Registering Event Publisher Interceptor
+            builder.Services.AddScoped<PublishDomainEventsInterceptor>();
+
             // Registering Interfaces and Implementations
             builder.Services.AddScoped<ICustomerQueryRepository, CustomerQueryRepository>();
             builder.Services.AddScoped<ICustomerCommandRepository, CustomerCommandRepository>();
@@ -98,9 +108,11 @@ namespace Mc2.CrudTest.Presentation
             builder.Services.AddScoped<IRequestHandler<CreateCustomerCommand, long>, CreateCustomerCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<UpdateCustomerCommand, long>, UpdateCustomerCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<DeleteCustomerCommand, long>, DeleteCustomerCommandHandler>();
-
+            // Registering Command Validators (FluentValidation used)
             builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<UpdateCustomerValidator>();
+            
+
 
             var app = builder.Build();
 

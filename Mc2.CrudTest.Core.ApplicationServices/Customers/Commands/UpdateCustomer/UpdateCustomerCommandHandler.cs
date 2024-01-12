@@ -39,7 +39,10 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustome
                     BankAccountNumber = command.BankAccountNumber
                 };
                 await _customerRepository.UpdateAsync(customer);
+                customer.UpdateCustomerEvent();
+
                 await _unitOfWork.CommitAsync();
+
             }
 
             return command.Id;

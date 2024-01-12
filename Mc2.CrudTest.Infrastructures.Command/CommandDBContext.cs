@@ -1,5 +1,7 @@
 ﻿using Mc2.CrudTest.Core.Domain.Customers.Entities;
 using Mc2.CrudTest.Infrastructures.Command.Customers;
+using Mc2.CrudTest.Infrastructures.Command.Interceptors;
+using Mc2.CrudTest.Presentation.Shared.HelperClasses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -7,28 +9,28 @@ namespace Mc2.CrudTest.Infrastructures.Command
 {
     public class CommandDBContext : DbContext
     {
-        public CommandDBContext(DbContextOptions<CommandDBContext> options) : base(options)
+        private readonly PublishDomainEventsInterceptor _publishDomainEventsInterceptor;
+        public CommandDBContext(DbContextOptions<CommandDBContext> options, PublishDomainEventsInterceptor publishDomainEventsInterceptor) : base(options)
         {
+            _publishDomainEventsInterceptor = publishDomainEventsInterceptor;
         }
 
         public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new CustomerConfig())
+                .Ignore<List<IDomainEvent>>()
+                .ApplyConfigurationsFromAssembly(typeof(CommandDBContext).Assembly);
+
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new CustomerConfig());
         }
-    }
 
-
-    public class CommandContextDesignTimeFactory :
-       IDesignTimeDbContextFactory<CommandDBContext>
-    {
-        public CommandDBContext CreateDbContext(string[] args)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new DbContextOptionsBuilder<CommandDBContext>();
-            builder.UseSqlServer("Server=crudtest_db;Database=crudtest;MultipleActiveResultSets=true;User ID=sa; Password=a_A123456;Persist Security Info=True;TrustServerCertificate=True");
-            return new CommandDBContext(builder.Options);
+            optionsBuilder.AddInterceptors(_publishDomainEventsInterceptor);
+            base.OnConfiguring(optionsBuilder);
         }
     }
+
 }

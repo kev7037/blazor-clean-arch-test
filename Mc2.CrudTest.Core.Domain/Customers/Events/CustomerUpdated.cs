@@ -1,6 +1,8 @@
-﻿namespace Mc2.CrudTest.Core.Domain.Customers.Events
+﻿using Mc2.CrudTest.Presentation.Shared.HelperClasses;
+
+namespace Mc2.CrudTest.Core.Domain.Customers.Events
 {
-    public class CustomerUpdated
+    public class CustomerUpdated : IDomainEvent
     {
         public long Id { get; set; }
         public string FirstName { get; set; }

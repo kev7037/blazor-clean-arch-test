@@ -1,10 +1,8 @@
 ﻿using Mc2.CrudTest.Core.ApplicationServices.Customers.Queries.GetAllCustomers;
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Queries.GetCustomerById;
 using Mc2.CrudTest.Core.Domain.Customers.DTOs;
-using Mc2.CrudTest.Core.Domain.Customers.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Mc2.CrudTest.Presentation.Server.Controllers
 {
@@ -12,54 +10,26 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
     [Route("[controller]")]
     public class CustomersQueryController : ControllerBase
     {
-        private readonly IServiceProvider serviceProvider;
-        private readonly Mediator mediator;
+        private readonly Mediator _mediator;
 
-        public CustomersQueryController(IServiceProvider serviceProvider)
-        {
-            this.serviceProvider = serviceProvider;
-            mediator = new Mediator(serviceProvider);
-        }
+        public CustomersQueryController(Mediator mediator) => _mediator = mediator;
 
         [HttpGet]
         [Route("GetAllCustomers")]
         public async Task<IEnumerable<CustomerDto>> GetAllCustomers()
         {
-            var mediator = new Mediator(serviceProvider);
-            var customers = await mediator.Send(new GetAllCustomersQuery());
+            List<CustomerDto> customers = await _mediator.Send(new GetAllCustomersQuery());
             Console.WriteLine("get all: " + customers.FirstOrDefault()?.FirstName);
             return customers;
         }
 
         [HttpGet]
         [Route("GetAllCustomers/{Id}")]
-        public CustomerDto? GetCustomerById([FromForm] long id)
+        public async Task<CustomerDto?> GetCustomerById(long id)
         {
-            var list = new List<CustomerDto>
-            {
-                new CustomerDto{
-                    Id = 1,
-                    FirstName = "FirstName",
-                    LastName = "LastName",
-                    DateOfBirth = DateTime.Now,
-                    PhoneNumber = "PhoneNumber",
-                    Email = "Email",
-                    BankAccountNumber = "BankAccountNumber",
-                },
-                new CustomerDto
-                {
-                    Id = 2,
-                    FirstName = "FirstName2",
-                    LastName = "LastName2",
-                    DateOfBirth = DateTime.UtcNow,
-                    PhoneNumber = "PhoneNumber",
-                    Email = "Email",
-                    BankAccountNumber = "BankAccountNumber",
-                }
-            };
-            Console.WriteLine("get by id: " + id);
-
-            return list.Where(x => x.Id == id).FirstOrDefault();
+            CustomerDto? customer = await _mediator.Send(new GetCustomerByIdQuery() { Id = id });
+            Console.WriteLine("get all: " + customer?.FirstName);
+            return customer;
         }
 
 

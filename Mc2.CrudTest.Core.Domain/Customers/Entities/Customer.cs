@@ -1,4 +1,6 @@
-﻿using Mc2.CrudTest.Presentation.Shared.HelperClasses;
+﻿using Mc2.CrudTest.Core.Domain.Customers.Events;
+using Mc2.CrudTest.Presentation.Shared.HelperClasses;
+using PhoneNumbers;
 
 namespace Mc2.CrudTest.Core.Domain.Customers.Entities
 {
@@ -10,7 +12,7 @@ namespace Mc2.CrudTest.Core.Domain.Customers.Entities
         public DateTime DateOfBirth { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string BankAccountNumber { get; set; } 
+        public string BankAccountNumber { get; set; }
         #endregion
 
         public Customer() { }
@@ -28,5 +30,43 @@ namespace Mc2.CrudTest.Core.Domain.Customers.Entities
             Email = email;
             BankAccountNumber = bankAccountNumber;
         }
+
+
+        public void CreateCustomerEvent()
+        {
+            AddDomainEvent(new CustomerCreated
+            {
+                Id = Id,
+                FirstName = FirstName,
+                LastName = LastName,
+                DateOfBirth = DateOfBirth,
+                PhoneNumber = PhoneNumber,
+                Email = Email,
+                BankAccountNumber = BankAccountNumber
+            });
+        }
+
+        public void UpdateCustomerEvent()
+        {
+            AddDomainEvent(new CustomerUpdated
+            {
+                Id = Id,
+                FirstName = FirstName,
+                LastName = LastName,
+                DateOfBirth = DateOfBirth,
+                PhoneNumber = PhoneNumber,
+                Email = Email,
+                BankAccountNumber = BankAccountNumber
+            });
+        }
+
+        public void DeleteCustomerEvent()
+        {
+            AddDomainEvent(new CustomerDeleted
+            {
+                Id = Id
+            });
+        }
+
     }
 }

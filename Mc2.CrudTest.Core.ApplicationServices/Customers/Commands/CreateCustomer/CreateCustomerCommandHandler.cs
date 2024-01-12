@@ -38,8 +38,10 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustome
                 };
 
                 await _customerRepository.AddAsync(customer);
+                customer.CreateCustomerEvent();
+
                 await _unitOfWork.CommitAsync();
-                
+
                 return customer.Id;
             }
 
