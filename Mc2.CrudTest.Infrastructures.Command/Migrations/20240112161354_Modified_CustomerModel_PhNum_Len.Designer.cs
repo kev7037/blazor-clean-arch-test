@@ -4,6 +4,7 @@ using Mc2.CrudTest.Infrastructures.Command;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mc2.CrudTest.Infrastructures.Command.Migrations
 {
     [DbContext(typeof(CommandDBContext))]
-    partial class CommandDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240112161354_Modified_CustomerModel_IBan_PhNum_Len")]
+    partial class Modified_CustomerModel_PhNum_Len
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

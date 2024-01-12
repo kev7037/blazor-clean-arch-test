@@ -13,8 +13,13 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
     public class CustomersQueryController : ControllerBase
     {
         private readonly IServiceProvider serviceProvider;
+        private readonly Mediator mediator;
 
-        public CustomersQueryController(IServiceProvider serviceProvider) => this.serviceProvider = serviceProvider;
+        public CustomersQueryController(IServiceProvider serviceProvider)
+        {
+            this.serviceProvider = serviceProvider;
+            mediator = new Mediator(serviceProvider);
+        }
 
         [HttpGet]
         [Route("GetAllCustomers")]

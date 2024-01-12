@@ -1,4 +1,6 @@
-﻿using Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts;
+﻿using FluentValidation;
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustomer;
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts;
 using Mc2.CrudTest.Core.Domain;
 using Mc2.CrudTest.Core.Domain.Customers.Entities;
 using MediatR;
@@ -8,30 +10,40 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustome
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, long>
     {
         private readonly ICustomerCommandRepository _customerRepository;
+        private readonly IValidator<CreateCustomerCommand> _validator;
         private readonly ICustomerUnitOfWork _unitOfWork;
 
-        public CreateCustomerCommandHandler(ICustomerCommandRepository customerRepository, ICustomerUnitOfWork unitOfWork)
+        public CreateCustomerCommandHandler(ICustomerCommandRepository customerRepository,
+                                            ICustomerUnitOfWork unitOfWork,
+                                            IValidator<CreateCustomerCommand> validator)
         {
             _customerRepository = customerRepository;
             _unitOfWork = unitOfWork;
+            _validator = validator;
         }
 
-        public async Task<long> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(CreateCustomerCommand command, CancellationToken cancellationToken)
         {
-            var customer = new Customer
+            var validationResult = await _validator.ValidateAsync(command);
+            if (validationResult.IsValid)
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                DateOfBirth = request.DateOfBirth,
-                PhoneNumber = request.PhoneNumber,
-                Email = request.Email,
-                BankAccountNumber = request.BankAccountNumber
-            };
+                var customer = new Customer
+                {
+                    FirstName = command.FirstName,
+                    LastName = command.LastName,
+                    DateOfBirth = command.DateOfBirth,
+                    PhoneNumber = command.PhoneNumber,
+                    Email = command.Email,
+                    BankAccountNumber = command.BankAccountNumber
+                };
 
-            await _customerRepository.AddAsync(customer);
-            await _unitOfWork.CommitAsync();
+                await _customerRepository.AddAsync(customer);
+                await _unitOfWork.CommitAsync();
+                
+                return customer.Id;
+            }
 
-            return customer.Id;
+            return 0;
         }
 
     }

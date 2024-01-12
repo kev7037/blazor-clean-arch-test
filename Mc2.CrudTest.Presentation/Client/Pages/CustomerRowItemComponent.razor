@@ -28,13 +28,13 @@
                 <input @bind="CustomerRowItem.DateOfBirth" class="form-control" placeholder="DateOfBirth" type="date" />
             </td>
             <td>
-                <input @bind="CustomerRowItem.PhoneNumber" class="form-control" placeholder="PhoneNumber" type="tel"/>
+                <input @bind="CustomerRowItem.PhoneNumber" class="form-control" placeholder="PhoneNumber (like +989123456789)" type="tel"/>
             </td>
             <td>
                 <input @bind="CustomerRowItem.Email" class="form-control" placeholder="Email" type="email" />
             </td>
             <td>
-                <input @bind="CustomerRowItem.BankAccountNumber" class="form-control" placeholder="BankAccountNumber" type="number"/>
+                <input @bind="CustomerRowItem.BankAccountNumber" class="form-control" placeholder="IBan (like US021000021234567890123)" />
             </td>
             <td>
                 <a @onclick="async () => { await UpdateCustomer.InvokeAsync(CustomerRowItem); isEditMode = false;}" href="javascript:void(0)">Save</a>

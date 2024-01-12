@@ -1,3 +1,4 @@
+using FluentValidation;
 using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustomer;
 using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.DeleteCustomer;
 using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustomer;
@@ -94,12 +95,14 @@ namespace Mc2.CrudTest.Presentation
             // Registering handlers
             builder.Services.AddTransient<IRequestHandler<GetAllCustomersQuery, List<CustomerDto>>, GetAllCustomersQueryHandler>();
             builder.Services.AddTransient<IRequestHandler<GetCustomerByIdQuery, CustomerDto>, GetCustomerByIdQueryHandler>();
-            builder.Services.AddTransient<IRequestHandler<CreateCustomerCommand, long>, CreateCustomerCommandHandler>();
-            builder.Services.AddTransient<IRequestHandler<UpdateCustomerCommand, long>, UpdateCustomerCommandHandler>();
-            builder.Services.AddTransient<IRequestHandler<DeleteCustomerCommand, long>, DeleteCustomerCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<CreateCustomerCommand, long>, CreateCustomerCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<UpdateCustomerCommand, long>, UpdateCustomerCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<DeleteCustomerCommand, long>, DeleteCustomerCommandHandler>();
 
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateCustomerValidator>();
 
-             var app = builder.Build();
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
