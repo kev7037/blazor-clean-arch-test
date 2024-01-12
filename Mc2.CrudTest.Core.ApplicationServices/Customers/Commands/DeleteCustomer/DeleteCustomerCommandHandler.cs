@@ -1,8 +1,8 @@
-﻿using Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts;
+﻿using FluentValidation;
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts;
 using Mc2.CrudTest.Core.Domain;
-using FluentValidation;
-using MediatR;
 using Mc2.CrudTest.Core.Domain.Customers.Entities;
+using MediatR;
 
 namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.DeleteCustomer
 {
@@ -23,10 +23,10 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.DeleteCustome
 
         public async Task<long> Handle(DeleteCustomerCommand command, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(command);
+            FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(command);
             if (validationResult.IsValid)
             {
-                var customer = new Customer
+                Customer customer = new Customer
                 {
                     Id = command.Id,
                 };

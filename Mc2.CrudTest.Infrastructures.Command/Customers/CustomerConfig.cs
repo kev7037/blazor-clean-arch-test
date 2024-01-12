@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Mc2.CrudTest.Core.Domain.Customers.Entities;
 using Microsoft.EntityFrameworkCore;
-using Mc2.CrudTest.Core.Domain.Customers.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mc2.CrudTest.Infrastructures.Command.Customers
 {

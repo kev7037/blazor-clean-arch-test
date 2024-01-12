@@ -4,13 +4,13 @@
     {
         public static bool ValidatePhoneNumber(string e164PhoneNumber)
         {
-            var phoneNumberUtil = PhoneNumbers.PhoneNumberUtil.GetInstance();
+            PhoneNumbers.PhoneNumberUtil phoneNumberUtil = PhoneNumbers.PhoneNumberUtil.GetInstance();
             try
             {
-                var phoneNumber = phoneNumberUtil.Parse(e164PhoneNumber, null);
+                PhoneNumbers.PhoneNumber phoneNumber = phoneNumberUtil.Parse(e164PhoneNumber, null);
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }

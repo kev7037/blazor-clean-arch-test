@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustomer;
 using Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts;
 using Mc2.CrudTest.Core.Domain;
 using Mc2.CrudTest.Core.Domain.Customers.Entities;
@@ -24,10 +23,10 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustome
 
         public async Task<long> Handle(CreateCustomerCommand command, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(command);
+            FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(command);
             if (validationResult.IsValid)
             {
-                var customer = new Customer
+                Customer customer = new Customer
                 {
                     FirstName = command.FirstName,
                     LastName = command.LastName,

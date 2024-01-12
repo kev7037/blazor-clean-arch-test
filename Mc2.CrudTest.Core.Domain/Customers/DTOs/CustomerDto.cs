@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Mc2.CrudTest.Core.Domain.Customers.DTOs
+﻿namespace Mc2.CrudTest.Core.Domain.Customers.DTOs
 {
     public class CustomerDto
     {

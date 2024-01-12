@@ -33,7 +33,7 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustome
 
         private bool IsValidIban(string iban)
         {
-            var ibanValidator = new IbanValidator();
+            IbanValidator ibanValidator = new IbanValidator();
             return ibanValidator.Validate(iban).IsValid;
         }
     }

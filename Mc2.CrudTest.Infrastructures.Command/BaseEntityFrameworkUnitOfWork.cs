@@ -6,19 +6,10 @@ namespace Mc2.CrudTest.Infrastructures.Command
     {
         protected readonly TDbContext _dbContext;
 
-        public BaseEntityFrameworkUnitOfWork(TDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public BaseEntityFrameworkUnitOfWork(TDbContext dbContext) => _dbContext = dbContext;
 
-        public int Commit()
-        {
-            return _dbContext.SaveChanges();
-        }
+        public int Commit() => _dbContext.SaveChanges();
 
-        public async Task<int> CommitAsync()
-        {
-            return await _dbContext.SaveChangesAsync();
-        }
+        public async Task<int> CommitAsync() => await _dbContext.SaveChangesAsync();
     }
 }

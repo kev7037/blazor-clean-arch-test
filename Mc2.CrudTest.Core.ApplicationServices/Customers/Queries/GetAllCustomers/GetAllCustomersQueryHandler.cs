@@ -8,10 +8,7 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Queries.GetAllCustomer
     {
         private readonly ICustomerQueryRepository _customerQueryRepository;
 
-        public GetAllCustomersQueryHandler(ICustomerQueryRepository customerQueryRepository)
-        {
-            _customerQueryRepository = customerQueryRepository;
-        }
+        public GetAllCustomersQueryHandler(ICustomerQueryRepository customerQueryRepository) => _customerQueryRepository = customerQueryRepository;
 
         public async Task<List<CustomerDto>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
             => await _customerQueryRepository.GetAllCustomers();

@@ -1,7 +1,6 @@
 ﻿using Mc2.CrudTest.Core.Domain.Customers.DTOs;
 using Mc2.CrudTest.ServerHelper.Models;
 using System.Net.Http.Json;
-using System.Text;
 
 namespace Mc2.CrudTest.ServerHelper
 {
@@ -12,8 +11,10 @@ namespace Mc2.CrudTest.ServerHelper
 
         public CrudTestClientService(ApiClientOptions apiClientOptions)
         {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(apiClientOptions.ApiBaseAddress);
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(apiClientOptions.ApiBaseAddress)
+            };
 
         }
 

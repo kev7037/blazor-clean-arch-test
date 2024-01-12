@@ -13,10 +13,7 @@ namespace Mc2.CrudTest.Presentation.Client.Pages
             await LoadCustomers();
         }
 
-        private async Task LoadCustomers()
-        {
-            Customers = await clientService.GetAllCustomers();
-        }
+        private async Task LoadCustomers() => Customers = await clientService.GetAllCustomers();
 
         private async Task AddCustomer()
         {

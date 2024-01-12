@@ -15,14 +15,10 @@ using Mc2.CrudTest.Infrastructures.Command.Interceptors;
 using Mc2.CrudTest.Infrastructures.Query;
 using Mc2.CrudTest.Infrastructures.Query.Customers;
 using Mc2.CrudTest.ServerHelper;
-using Mc2.CrudTest.ServerHelper.IoC;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
-using System;
 using System.Reflection;
 
 namespace Mc2.CrudTest.Presentation
@@ -31,15 +27,15 @@ namespace Mc2.CrudTest.Presentation
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 
             // Add services to the container.
             #region cntString
-            var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-            var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-            var dbSAPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
-            var conncetionString = $"Server={dbHost};Database={dbName};User ID=sa; Password={dbSAPassword};Persist Security Info=True;TrustServerCertificate=True";
+            string? dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+            string? dbName = Environment.GetEnvironmentVariable("DB_NAME");
+            string? dbSAPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
+            string conncetionString = $"Server={dbHost};Database={dbName};User ID=sa; Password={dbSAPassword};Persist Security Info=True;TrustServerCertificate=True";
             #endregion
 
             builder.Services
@@ -111,10 +107,10 @@ namespace Mc2.CrudTest.Presentation
             // Registering Command Validators (FluentValidation used)
             builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<UpdateCustomerValidator>();
-            
 
 
-            var app = builder.Build();
+
+            WebApplication app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -148,9 +144,9 @@ namespace Mc2.CrudTest.Presentation
 
         static void ApplyMigrations(WebApplication app)
         {
-            using (var scope = app.Services.CreateScope())
+            using (IServiceScope scope = app.Services.CreateScope())
             {
-                var _db = scope.ServiceProvider.GetRequiredService<CommandDBContext>();
+                CommandDBContext _db = scope.ServiceProvider.GetRequiredService<CommandDBContext>();
 
                 if (_db.Database.GetPendingMigrations().Count() > 0)
                 {

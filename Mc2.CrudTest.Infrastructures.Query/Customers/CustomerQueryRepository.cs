@@ -7,10 +7,7 @@ namespace Mc2.CrudTest.Infrastructures.Query.Customers
     public class CustomerQueryRepository : QueryDBContext, ICustomerQueryRepository
     {
         protected readonly QueryDBContext _dbContext;
-        public CustomerQueryRepository(DbContextOptions options, QueryDBContext dbContext) : base(options)
-        {
-            _dbContext = dbContext;
-        }
+        public CustomerQueryRepository(DbContextOptions options, QueryDBContext dbContext) : base(options) => _dbContext = dbContext;
 
         public async Task<List<CustomerDto>> GetAllCustomers()
             => await _dbContext

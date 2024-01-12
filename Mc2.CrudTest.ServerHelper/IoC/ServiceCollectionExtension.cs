@@ -12,7 +12,7 @@ namespace Mc2.CrudTest.ServerHelper.IoC
             services.Configure(options);
             services.AddSingleton(provider =>
             {
-                var opt = provider.GetRequiredService<IOptions<ApiClientOptions>>().Value;
+                ApiClientOptions opt = provider.GetRequiredService<IOptions<ApiClientOptions>>().Value;
                 return new CrudTestClientService(opt);
             });
         }

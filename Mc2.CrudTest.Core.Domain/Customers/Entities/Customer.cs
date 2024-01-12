@@ -1,6 +1,5 @@
 ﻿using Mc2.CrudTest.Core.Domain.Customers.Events;
 using Mc2.CrudTest.Presentation.Shared.HelperClasses;
-using PhoneNumbers;
 
 namespace Mc2.CrudTest.Core.Domain.Customers.Entities
 {

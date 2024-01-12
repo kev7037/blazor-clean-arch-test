@@ -32,19 +32,19 @@ namespace Mc2.CrudTest.Infrastructures.Command.Interceptors
                 return;
 
             // Get Hold of all the various entities
-            var entitiesWithDomainEvents = dbContext.ChangeTracker.Entries<IHasDomainEvents>()
+            List<IHasDomainEvents> entitiesWithDomainEvents = dbContext.ChangeTracker.Entries<IHasDomainEvents>()
                 .Where(entry => entry.Entity.DomainEvents.Any())
                 .Select(entry => entry.Entity)
                 .ToList();
 
             // Get Hold of all the various domain events
-            var domainEvents = entitiesWithDomainEvents.SelectMany(entry => entry.DomainEvents).ToList();
+            List<IDomainEvent> domainEvents = entitiesWithDomainEvents.SelectMany(entry => entry.DomainEvents).ToList();
 
             // clear domain events -> to prevent recursivly publish domain events over and over again
             entitiesWithDomainEvents.ForEach(e => { e.ClearDomainEvents(); });
 
             // publish domain events
-            foreach ( var domainEvent in domainEvents)
+            foreach (IDomainEvent? domainEvent in domainEvents)
             {
                 await _mediator.Publish(domainEvent);
             }

@@ -1,10 +1,10 @@
-﻿using Mc2.CrudTest.Presentation.Shared.Extentions;
-using FluentValidation;
+﻿using FluentValidation;
 using IbanNet;
+using Mc2.CrudTest.Presentation.Shared.Extentions;
 
 namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustomer
 {
-    public class CreateCustomerValidator: AbstractValidator<CreateCustomerCommand>
+    public class CreateCustomerValidator : AbstractValidator<CreateCustomerCommand>
     {
         public CreateCustomerValidator()
         {
@@ -29,7 +29,7 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustome
 
         private bool IsValidIban(string iban)
         {
-            var ibanValidator = new IbanValidator();
+            IbanValidator ibanValidator = new IbanValidator();
             return ibanValidator.Validate(iban).IsValid;
         }
     }
