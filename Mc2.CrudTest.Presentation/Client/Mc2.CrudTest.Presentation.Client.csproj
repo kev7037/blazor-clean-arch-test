@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Mc2.CrudTest.Core.Domain\Mc2.CrudTest.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\Mc2.CrudTest.ServerHelper\Mc2.CrudTest.ServerHelper.csproj" />
     <ProjectReference Include="..\Shared\Mc2.CrudTest.Presentation.Shared.csproj" />
   </ItemGroup>
 

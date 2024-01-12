@@ -4,6 +4,7 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustome
 {
     public class CreateCustomerCommand : IRequest<long>
     {
+        public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }

@@ -11,9 +11,37 @@ namespace Mc2.CrudTest.Infrastructures.Query.Customers
         {
             _dbContext = dbContext;
         }
-        public Task<List<CustomerDto>> GetAllCustomers() => throw new NotImplementedException();
-        //=> await _dbContext.Customers.AsNoTracking().ToList();
-        public Task<CustomerDto> GetCustomerById() => throw new NotImplementedException();
-        //=> await _dbContext.Customers.AsNoTracking().FirstOrDefault(x => x.Id == id);
+
+        public async Task<List<CustomerDto>> GetAllCustomers()
+            => await _dbContext
+                     .Customers
+                     .AsNoTracking()
+                     .Select(x => new CustomerDto()
+                     {
+                         Id = x.Id,
+                         FirstName = x.FirstName,
+                         LastName = x.LastName,
+                         DateOfBirth = x.DateOfBirth,
+                         PhoneNumber = x.PhoneNumber,
+                         Email = x.Email,
+                         BankAccountNumber = x.BankAccountNumber
+                     }).ToListAsync();
+
+
+        public async Task<CustomerDto?> GetCustomerById(long id)
+            => await _dbContext
+                     .Customers
+                     .AsNoTracking()
+                     .Select(x => new CustomerDto()
+                     {
+                         Id = x.Id,
+                         FirstName = x.FirstName,
+                         LastName = x.LastName,
+                         DateOfBirth = x.DateOfBirth,
+                         PhoneNumber = x.PhoneNumber,
+                         Email = x.Email,
+                         BankAccountNumber = x.BankAccountNumber
+                     })
+                     .FirstOrDefaultAsync();
     }
 }

@@ -27,4 +27,5 @@ RUN dotnet publish "./Mc2.CrudTest.Presentation.Server.csproj" -c $BUILD_CONFIGU
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ASPNETCORE_URLS=http://+:80
 ENTRYPOINT ["dotnet", "Mc2.CrudTest.Presentation.Server.dll"]

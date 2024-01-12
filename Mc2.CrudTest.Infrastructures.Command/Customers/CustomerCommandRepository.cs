@@ -13,6 +13,16 @@ namespace Mc2.CrudTest.Infrastructures.Command.Customers
         }
 
         public async Task AddAsync(Customer customer) 
-            => await _dbContext.AddAsync(customer);
+            => await _dbContext.Customers.AddAsync(customer);
+
+        public async Task UpdateAsync(Customer customer)
+            => _dbContext.Customers.Update(customer);
+
+        public async Task DeleteAsync(long id)
+        {
+            var customer = await _dbContext.Customers.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (customer != null)
+                _dbContext.Customers.Remove(customer);
+        }
     }
 }

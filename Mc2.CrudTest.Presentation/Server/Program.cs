@@ -1,8 +1,26 @@
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.CreateCustomer;
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.DeleteCustomer;
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustomer;
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts;
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Queries.GetAllCustomers;
+using Mc2.CrudTest.Core.ApplicationServices.Customers.Queries.GetCustomerById;
+using Mc2.CrudTest.Core.Domain;
+using Mc2.CrudTest.Core.Domain.Customers.DTOs;
+using Mc2.CrudTest.Core.Domain.Customers.Events;
 using Mc2.CrudTest.Infrastructures.Command;
+using Mc2.CrudTest.Infrastructures.Command.Customers;
 using Mc2.CrudTest.Infrastructures.Query;
+using Mc2.CrudTest.Infrastructures.Query.Customers;
+using Mc2.CrudTest.ServerHelper;
+using Mc2.CrudTest.ServerHelper.IoC;
+using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
+using System;
+using System.Reflection;
 
 namespace Mc2.CrudTest.Presentation
 {
@@ -46,8 +64,42 @@ namespace Mc2.CrudTest.Presentation
                 .ReadFrom.Configuration(context.Configuration);
             });
 
+            //builder.Services.AddApiClientService(x => x.ApiBaseAddress = builder.Configuration.GetValue<string>("ApiBaseAddress"));
 
-            var app = builder.Build();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder
+                            .WithOrigins("https://localhost:9081")
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .AllowAnyHeader();
+                    });
+            });
+
+            builder.Services.AddHttpClient<CrudTestClientService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:9081");
+            }).AddTypedClient<CrudTestClientService>();
+
+            // MediatR
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            
+            // Registering Interfaces and Implementations
+            builder.Services.AddScoped<ICustomerQueryRepository, CustomerQueryRepository>();
+            builder.Services.AddScoped<ICustomerCommandRepository, CustomerCommandRepository>();
+            builder.Services.AddScoped<ICustomerUnitOfWork, CustomerUnitOfWork>();
+            // Registering handlers
+            builder.Services.AddTransient<IRequestHandler<GetAllCustomersQuery, List<CustomerDto>>, GetAllCustomersQueryHandler>();
+            builder.Services.AddTransient<IRequestHandler<GetCustomerByIdQuery, CustomerDto>, GetCustomerByIdQueryHandler>();
+            builder.Services.AddTransient<IRequestHandler<CreateCustomerCommand, long>, CreateCustomerCommandHandler>();
+            builder.Services.AddTransient<IRequestHandler<UpdateCustomerCommand, long>, UpdateCustomerCommandHandler>();
+            builder.Services.AddTransient<IRequestHandler<DeleteCustomerCommand, long>, DeleteCustomerCommandHandler>();
+
+
+             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -67,11 +119,13 @@ namespace Mc2.CrudTest.Presentation
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("AllowSpecificOrigin");
 
 
             app.MapRazorPages();
             app.MapControllers();
             app.MapFallbackToFile("index.html");
+
 
             ApplyMigrations(app);
             app.Run();
@@ -89,5 +143,13 @@ namespace Mc2.CrudTest.Presentation
                 }
             }
         }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Program>() // Reference to your Program class
+                              .UseUrls("https://localhost:9081");
+                });
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustomer
+﻿using MediatR;
+
+namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustomer
 {
-    public class UpdateCustomerCommand
+    public class UpdateCustomerCommand : IRequest<long>
     {
         public long Id { get; set; }
         public string FirstName { get; set; }

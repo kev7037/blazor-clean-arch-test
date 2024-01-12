@@ -1,0 +1,61 @@
+﻿@using Mc2.CrudTest.Core.Domain.Customers.DTOs
+
+@if (CustomerRowItem != null)
+{
+    <tr>
+        @if (!isEditMode)
+        {
+            <td>@CustomerRowItem.FirstName</td>
+            <td>@CustomerRowItem.LastName</td>
+            <td>@CustomerRowItem.DateOfBirth.ToShortDateString()</td>
+            <td>@CustomerRowItem.PhoneNumber</td>
+            <td>@CustomerRowItem.Email</td>
+            <td>@CustomerRowItem.BankAccountNumber</td>
+            <td>
+                <a class="btn btn-sm btn-warning" @onclick="() => isEditMode=true" href="javascript:void(0)">Edit</a>
+                <a class="btn btn-sm btn-danger" @onclick="async () => await DeleteCustomer.InvokeAsync(CustomerRowItem.Id)" href="javascript:void(0)">Delete</a>
+            </td>
+        }
+        else
+        {
+            <td>
+                <input @bind="CustomerRowItem.FirstName" class="form-control" placeholder="FirstName" />
+            </td>
+            <td>
+                <input @bind="CustomerRowItem.LastName" class="form-control" placeholder="LastName" />
+            </td>
+            <td>
+                <input @bind="CustomerRowItem.DateOfBirth" class="form-control" placeholder="DateOfBirth" type="date" />
+            </td>
+            <td>
+                <input @bind="CustomerRowItem.PhoneNumber" class="form-control" placeholder="PhoneNumber" type="tel"/>
+            </td>
+            <td>
+                <input @bind="CustomerRowItem.Email" class="form-control" placeholder="Email" type="email" />
+            </td>
+            <td>
+                <input @bind="CustomerRowItem.BankAccountNumber" class="form-control" placeholder="BankAccountNumber" type="number"/>
+            </td>
+            <td>
+                <a @onclick="async () => { await UpdateCustomer.InvokeAsync(CustomerRowItem); isEditMode = false;}" href="javascript:void(0)">Save</a>
+                <a @onclick="() => isEditMode = false" href="javascript:void(0)">Cancel</a>
+            </td>
+        }
+    </tr>
+}
+
+
+@code {
+    private bool isEditMode = false;
+
+    [Parameter]
+    public CustomerDto? CustomerRowItem { get; set; }
+
+    [Parameter]
+    public EventCallback<CustomerDto> UpdateCustomer { get; set; }
+
+    [Parameter]
+    public EventCallback<long> DeleteCustomer { get; set; }
+
+
+}

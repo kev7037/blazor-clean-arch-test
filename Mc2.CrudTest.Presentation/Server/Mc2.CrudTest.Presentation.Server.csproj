@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Mc2.CrudTest.Infrastructures.Command\Mc2.CrudTest.Infrastructures.Command.csproj" />
     <ProjectReference Include="..\..\Mc2.CrudTest.Infrastructures.Query\Mc2.CrudTest.Infrastructures.Query.csproj" />
+    <ProjectReference Include="..\..\Mc2.CrudTest.ServerHelper\Mc2.CrudTest.ServerHelper.csproj" />
     <ProjectReference Include="..\Client\Mc2.CrudTest.Presentation.Client.csproj" />
     <ProjectReference Include="..\Shared\Mc2.CrudTest.Presentation.Shared.csproj" />
   </ItemGroup>

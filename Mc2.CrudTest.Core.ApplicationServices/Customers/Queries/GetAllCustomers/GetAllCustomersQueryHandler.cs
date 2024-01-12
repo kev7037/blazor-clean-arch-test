@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts;
+using Mc2.CrudTest.Core.Domain.Customers.DTOs;
+using MediatR;
 
 namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Queries.GetAllCustomers
 {
-    internal class GetAllCustomersQueryHandler
+    public class GetAllCustomersQueryHandler : IRequestHandler<GetAllCustomersQuery, List<CustomerDto>>
     {
+        private readonly ICustomerQueryRepository _customerQueryRepository;
+
+        public GetAllCustomersQueryHandler(ICustomerQueryRepository customerQueryRepository)
+        {
+            _customerQueryRepository = customerQueryRepository;
+        }
+
+        public async Task<List<CustomerDto>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
+            => await _customerQueryRepository.GetAllCustomers();
     }
 }

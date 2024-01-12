@@ -5,6 +5,6 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Contracts
     public interface ICustomerQueryRepository
     {
         Task<List<CustomerDto>> GetAllCustomers();
-        Task<CustomerDto> GetCustomerById();
+        Task<CustomerDto?> GetCustomerById(long id);
     }
 }

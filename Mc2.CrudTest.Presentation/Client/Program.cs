@@ -1,4 +1,5 @@
-using Mc2.CrudTest.Presentation.Client;
+using Microsoft.Extensions.DependencyInjection;
+using Mc2.CrudTest.ServerHelper.IoC;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -13,8 +14,13 @@ namespace Mc2.CrudTest.Presentation.Client
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddApiClientService(x => x.ApiBaseAddress = $"https://localhost:9081");
 
-            await builder.Build().RunAsync();
+            //var apiBaseAddress = Environment.GetEnvironmentVariable("API_BASE_ADDRESS");
+            //builder.Services.AddApiClientService(x => x.ApiBaseAddress = apiBaseAddress);
+
+            var app = builder.Build();
+            await app.RunAsync();
         }
     }
 }
