@@ -24,10 +24,10 @@ namespace Mc2.CrudTest.Infrastructures.Query.Customers
                          BankAccountNumber = x.BankAccountNumber
                      }).ToListAsync();
 
-
         public async Task<CustomerDto?> GetCustomerById(long id)
             => await _dbContext
                      .Customers
+                     .Where(x => x.Id == id)
                      .AsNoTracking()
                      .Select(x => new CustomerDto()
                      {
@@ -40,5 +40,23 @@ namespace Mc2.CrudTest.Infrastructures.Query.Customers
                          BankAccountNumber = x.BankAccountNumber
                      })
                      .FirstOrDefaultAsync();
+
+        public async Task<bool> IsEmailUnique(string email) 
+            => await _dbContext
+                     .Customers
+                     .Where(x => x.Email.Equals(email.Trim().ToLower()))
+                     .AsNoTracking()
+                     .AnyAsync();
+
+        public async Task<bool> IsFullNameAndDateOfBirthCombinationUnique(string firstName, string lastName, DateTime dateOfBirth, long? id)
+            => !(await _dbContext
+                     .Customers
+                     .Where(x => x.FirstName.Equals(firstName.Trim().ToLower())
+                              && x.LastName.Equals(lastName.Trim().ToLower())
+                              && x.DateOfBirth.Date.Equals(dateOfBirth.Date)
+                              && (id == null || x.Id != id))
+                     .AsNoTracking()
+                     .AnyAsync());
+
     }
 }

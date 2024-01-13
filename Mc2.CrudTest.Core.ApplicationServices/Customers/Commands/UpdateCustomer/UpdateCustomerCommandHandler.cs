@@ -29,12 +29,12 @@ namespace Mc2.CrudTest.Core.ApplicationServices.Customers.Commands.UpdateCustome
                 Customer customer = new Customer
                 {
                     Id = command.Id,
-                    FirstName = command.FirstName,
-                    LastName = command.LastName,
-                    DateOfBirth = command.DateOfBirth,
+                    FirstName = command.FirstName.Trim(),
+                    LastName = command.LastName.Trim(),
+                    DateOfBirth = command.DateOfBirth.Date,
                     PhoneNumber = command.PhoneNumber,
-                    Email = command.Email,
-                    BankAccountNumber = command.BankAccountNumber
+                    Email = command.Email.Trim(),
+                    BankAccountNumber = command.BankAccountNumber.Trim()
                 };
                 await _customerRepository.UpdateAsync(customer);
                 customer.UpdateCustomerEvent();

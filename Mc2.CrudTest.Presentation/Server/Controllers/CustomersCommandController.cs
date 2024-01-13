@@ -10,9 +10,15 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
     [Route("[controller]")]
     public class CustomersCommandController : ControllerBase
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly Mediator _mediator;
 
-        public CustomersCommandController(Mediator mediator) => _mediator = mediator;
+        public CustomersCommandController(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            _mediator = new Mediator(_serviceProvider);
+        }
+
 
         [HttpPost]
         [Route("Create")]

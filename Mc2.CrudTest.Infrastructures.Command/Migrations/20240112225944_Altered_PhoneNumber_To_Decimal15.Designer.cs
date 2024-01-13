@@ -4,6 +4,7 @@ using Mc2.CrudTest.Infrastructures.Command;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mc2.CrudTest.Infrastructures.Command.Migrations
 {
     [DbContext(typeof(CommandDBContext))]
-    partial class CommandDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240112225944_Altered_PhoneNumber_To_Decimal15")]
+    partial class Altered_PhoneNumber_To_Decimal15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,12 +58,6 @@ namespace Mc2.CrudTest.Infrastructures.Command.Migrations
                         .HasColumnType("DECIMAL(15,0)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("FirstName", "LastName", "DateOfBirth")
-                        .IsUnique();
 
                     b.ToTable("Customers");
                 });

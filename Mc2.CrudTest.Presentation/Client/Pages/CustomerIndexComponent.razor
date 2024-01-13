@@ -1,6 +1,7 @@
 ﻿@page "/Customers/Index"
 @using Mc2.CrudTest.Core.Domain.Customers.DTOs
 @using Mc2.CrudTest.ServerHelper
+@using Mc2.CrudTest.ServerHelper.Mc2.CrudTest.ServerHelper
 @inject CrudTestClientService clientService
 
 <h3>Customers Management</h3>
@@ -31,7 +32,7 @@
                         <input @bind="customer.DateOfBirth" class="form-control" placeholder="DateOfBirth" type="date" />
                     </td>
                     <td>
-                        <input @bind="customer.PhoneNumber" class="form-control" placeholder="PhoneNumber (like +989123456789)" type="tel" />
+                        <input @bind="customer.PhoneNumber" class="form-control" placeholder="989123456789" type="tel" />
                     </td>
                     <td>
                         <input @bind="customer.Email" class="form-control" placeholder="Email" type="email"/>
