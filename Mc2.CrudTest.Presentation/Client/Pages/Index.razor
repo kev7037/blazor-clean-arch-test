@@ -2,8 +2,31 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Mc2.CrudTest Project</h1>
+<h2><a href="https://github.com/mason-chase/crud-test-dotnet/">/mason-chase/crud-test-dotnet</a> - <a href="https://github.com/kev7037/blazor-clean-arch-test">/kev7037/blazor-clean-arch-test</a></h2>
 
-Welcome to your new app.
+<p>This is a Blazor WebAssembly Project Working as a Presentation Layer for a Clean Architecture, DDD, CQRS Solution containing 10 projects in 4 layers.</p>
+<p>These layers are:</p>
+<ul>
+    <li>Core: contaiing <b>Mc2.CrudTest.Core.ApplicationServices</b> and <b>Mc2.CrudTest.Core.Domain</b> projects (both class library)</li>
+    <li>Infrastructures: contaiing <b>Mc2.CrudTest.Infrastructures.Command</b> and <b>Mc2.CrudTest.Infrastructures.Query</b> projects (both class library)</li>
+    <li>EndPoints: contaiing <b>Mc2.CrudTest.Presentation.Client</b> (Blazor WebAssembly) and <b>Mc2.CrudTest.Presentation.Server</b> (Works as API) projects</li>
+    <li>Tests: contaiing <b>Mc2.CrudTest.AcceptanceTests</b> (nUnit)</li>
+</ul>
+<p>The solution contains <b>Mc2.CrudTest.Presentation.Shared</b> project too as a helper. it contains base classes and extensions methods</p>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<p>Commands and Queries and their Handlers are created in <b>Mc2.CrudTest.Core.ApplicationServices</b> project</p>
+<p>There are some sample event handlers in this project in <b>C_DomainEvent</b> namespace which are DomianEventHandlers. The response to events published in CommandHandlers using mediatR.</p>
+
+<p>Each of <b>Mc2.CrudTest.Infrastructures.Command</b> and <b>Mc2.CrudTest.Infrastructures.Query</b> has their own DbContext and Migrations are set in <b>Mc2.CrudTest.Infrastructures.Command</b> project. </p>
+<p>Database migrations apply automatically on app startup.</p>
+
+<p>Fluent Validation Library is used to validate Command and Queries.</p>
+<p>Custom validations are implemented and <b><a href="https://github.com/google/libphonenumber">libphonenumber</a></b> has been used to validate <b>Customr.PhoneNumber</b></p>
+
+<p>Two Blazor Components created. One to show the <b>/Customers/Index</b> and One to show each <b>Row</b> in Customers List.</p>
+<p>Injection, EventCallback, Binding, Partial Class (to seperate @@code section from html codes - .razor file) has been used in Blazor Components.</p>
+
+<p>The project is dockerized using dockerfiles and <b>docker-compose</b> and it can be run using the <b>docker-compose</b> file.</p>
+
+<p>Hope you enjoy this demo :)</p>

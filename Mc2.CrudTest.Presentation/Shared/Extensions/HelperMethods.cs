@@ -1,6 +1,6 @@
 ﻿using PhoneNumbers;
 
-namespace Mc2.CrudTest.Presentation.Shared.Extentions
+namespace Mc2.CrudTest.Presentation.Shared.Extensions
 {
     public static class HelperMethods
     {
